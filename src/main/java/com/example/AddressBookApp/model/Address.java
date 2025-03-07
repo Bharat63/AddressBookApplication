@@ -1,16 +1,16 @@
 package com.example.AddressBookApp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Entity
-@Table(name = "address")
-@Getter
-@Setter
+@Table(name = "addresses")  // Use plural for database table names
+@Data // Includes @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Address {
 
     @Id
@@ -21,8 +21,10 @@ public class Address {
     private String name;
 
     @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
 
     @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     private String phone;
 }
