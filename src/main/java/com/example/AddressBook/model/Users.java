@@ -1,4 +1,5 @@
-package  com.example.AddressBook.model;
+package com.example.AddressBook.model;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -25,6 +26,9 @@ public class Users {
 
     @Column(unique = true)
     private String resetToken;
+
+    @Column(nullable = false)
+    private boolean verified = false;
 
     public Users() {}
 
@@ -74,13 +78,21 @@ public class Users {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
-
     }
+
     public String getResetToken() {
         return resetToken;
     }
 
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

@@ -63,6 +63,7 @@ public class UserServices implements UserInterface {
                 .orElseThrow(() -> new VerificationException("Invalid token"));
 
         user.setVerificationToken(null);
+        user.setVerified(true);
         userRepository.save(user);
 
         return "Account verified";
