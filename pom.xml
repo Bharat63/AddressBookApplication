@@ -53,7 +53,15 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.33</version>  <!-- Ensure version is correct -->
+			<scope>runtime</scope>
+		</dependency>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>
