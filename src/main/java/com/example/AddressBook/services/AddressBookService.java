@@ -37,31 +37,45 @@ public class AddressBookService implements AddressBookInterface {
 
     @Override
     public  AddressBook getAddressBookById(Long id){
-        log.info("find details of AddressBook with id ");
-        return addressBookRepository.findById(id).orElseThrow(()-> new RuntimeException("Id not found"+id));
+        try{
+            log.info("find details of AddressBook with id ");
+            return addressBookRepository.findById(id).orElseThrow(()-> new RuntimeException("Id not found"+id));
+        }catch (Exception e){
+            throw new RuntimeException("Error retrieving address with ID: " + id,e);
+        }
     }
 
     @Override
     public AddressBook updateAddressBookById(Long id, AddressBookDto addressBookDto){
-        log.info("find details of AddressBook with id ");
-        AddressBook found=addressBookRepository.findById(id).orElseThrow(()->new RuntimeException("Id not found"));
-        found.setName(addressBookDto.getName());
-        found.setPhone(addressBookDto.getPhone());
-        found.setEmail(addressBookDto.getEmail());
+       try {
+           log.info("find details of AddressBook with id ");
+           AddressBook found=addressBookRepository.findById(id).orElseThrow(()->new RuntimeException("Id not found"));
+           found.setName(addressBookDto.getName());
+           found.setPhone(addressBookDto.getPhone());
+           found.setEmail(addressBookDto.getEmail());
 
-        AddressBook uodate=addressBookRepository.save(found);
-        log.info("Update done");
-        return uodate;
+           AddressBook uodate=addressBookRepository.save(found);
+           log.info("Update done");
+           return uodate;
+       }catch (Exception e) {
+           throw new RuntimeException("Error deleting address with ID: " + id, e);
+       }
+
 
 
     }
 
     @Override
     public void deleteAddressBookById(Long id){
-        log.info("find details of AddressBook with id ");
-        AddressBook found=addressBookRepository.findById(id).orElseThrow(() -> new RuntimeException("Id not found: " + id));
+        try{
+            log.info("find details of AddressBook with id ");
+            AddressBook found=addressBookRepository.findById(id).orElseThrow(() -> new RuntimeException("Id not found: " + id));
 
-        addressBookRepository.delete(found);
-        log.info(" AddressBook deleted successfully");
+            addressBookRepository.delete(found);
+            log.info(" AddressBook deleted successfully");
+        }catch (Exception e){
+            throw  new RuntimeException("Error deleting address with ID: " + id, e);
+        }
     }
+
 }
