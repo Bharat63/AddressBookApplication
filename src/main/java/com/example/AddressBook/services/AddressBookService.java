@@ -1,11 +1,8 @@
 package com.example.AddressBook.services;
 
-import com.example.AddressBook.Exception.AddressBookNotFoundException;
 import com.example.AddressBook.dto.AddressBookDto;
 import com.example.AddressBook.model.AddressBook;
 import com.example.AddressBook.repository.AddressBookRepository;
-import com.example.AddressBook.serviceInterfaces.AddressBookInterface;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,62 +16,90 @@ import java.util.List;
 @Slf4j
 @Service
 @EnableCaching
-public class AddressBookService implements AddressBookInterface {
+public class AddressBookService {
 
     @Autowired
     private AddressBookRepository addressBookRepository;
 
+    @Autowired
+    private MessagePublisher messagePublisher;
+
+    @Autowired
+    private EmailService emailService;
+
     @CachePut(value = "addressBook", key = "#result.id")
     public AddressBook addAddressBook(AddressBookDto addressBookDto) {
-        AddressBook addressBook = new AddressBook();
-        addressBook.setName(addressBookDto.getName());
-        addressBook.setEmail(addressBookDto.getEmail());
-        addressBook.setPhone(addressBookDto.getPhone());
-        AddressBook savedAddressBook = addressBookRepository.save(addressBook);
-        log.info("Added new AddressBook entry: {}", savedAddressBook);
-        return savedAddressBook;
+        try {
+            AddressBook addressBook = new AddressBook();
+            addressBook.setName(addressBookDto.getName());
+            addressBook.setEmail(addressBookDto.getEmail());
+            addressBook.setPhone(addressBookDto.getPhone());
+            AddressBook savedAddressBook = addressBookRepository.save(addressBook);
+            log.info("Added new AddressBook entry: {}", savedAddressBook);
+            messagePublisher.sendMessage("contact.add.queue", "New Contact Added: " + savedAddressBook.getEmail());
+            emailService.sendNotificationEmail(savedAddressBook.getEmail(), "New contact added to your address book.");
+            return savedAddressBook;
+        } catch (Exception e) {
+            log.error("Error adding AddressBook: {}", e.getMessage());
+            throw new RuntimeException("Failed to add address book entry: " + e.getMessage());
+        }
     }
 
     @Cacheable(value = "addressBookList")
     public List<AddressBook> getAllAddressBook() {
-        log.info("Fetching all AddressBook entries from DB.");
-        return addressBookRepository.findAll();
+        try {
+            log.info("Fetching all AddressBook entries from DB.");
+            return addressBookRepository.findAll();
+        } catch (Exception e) {
+            log.error("Error fetching all AddressBook entries: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch address book entries: " + e.getMessage());
+        }
     }
 
     @Cacheable(value = "addressBook", key = "#id")
     public AddressBook getAddressBookById(Long id) {
-        log.info("Fetching AddressBook with ID: {}", id);
-        return addressBookRepository.findById(id)
-                .orElseThrow(() -> new AddressBookNotFoundException("Id not found: " + id));
+        try {
+            log.info("Fetching AddressBook with ID: {}", id);
+            return addressBookRepository.findById(id).orElseThrow(() ->
+                    new RuntimeException("Address book with ID " + id + " not found"));
+        } catch (Exception e) {
+            log.error("Error fetching AddressBook by ID: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch address book with ID: " + id + " due to: " + e.getMessage());
+        }
     }
 
     @CachePut(value = "addressBook", key = "#id")
     public AddressBook updateAddressBookById(Long id, AddressBookDto addressBookDto) {
-        log.info("Updating AddressBook with ID: {}", id);
-        AddressBook found = addressBookRepository.findById(id)
-                .orElseThrow(() -> new AddressBookNotFoundException("Id not found: " + id));
+        try {
+            log.info("Updating AddressBook with ID: {}", id);
+            AddressBook found = addressBookRepository.findById(id).orElseThrow(() ->
+                    new RuntimeException("Address book with ID " + id + " not found"));
 
-        found.setName(addressBookDto.getName());
-        found.setPhone(addressBookDto.getPhone());
-        found.setEmail(addressBookDto.getEmail());
+            found.setName(addressBookDto.getName());
+            found.setPhone(addressBookDto.getPhone());
+            found.setEmail(addressBookDto.getEmail());
 
-        AddressBook updated = addressBookRepository.save(found);
-        log.info("Updated AddressBook: {}", updated);
-        return updated;
+            AddressBook updated = addressBookRepository.save(found);
+            log.info("Updated AddressBook: {}", updated);
+            return updated;
+        } catch (Exception e) {
+            log.error("Error updating AddressBook by ID: {}", e.getMessage());
+            throw new RuntimeException("Failed to update address book with ID: " + id + " due to: " + e.getMessage());
+        }
     }
 
     @CacheEvict(value = "addressBook", key = "#id")
     public void deleteAddressBookById(Long id) {
-        log.info("Deleting AddressBook with ID: {}", id);
-        AddressBook found = addressBookRepository.findById(id)
-                .orElseThrow(() -> new AddressBookNotFoundException("Id not found: " + id));
+        try {
+            log.info("Deleting AddressBook with ID: {}", id);
+            AddressBook found = addressBookRepository.findById(id).orElseThrow(() ->
+                    new RuntimeException("Address book with ID " + id + " not found"));
 
-        addressBookRepository.delete(found);
-        log.info("Deleted AddressBook with ID: {}", id);
-    }
-
-    @CacheEvict(value = "addressBookList", allEntries = true)
-    public void clearAddressBookCache() {
-        log.info("Clearing all cached AddressBook entries.");
+            addressBookRepository.delete(found);
+            log.info("Deleted AddressBook with ID: {}", id);
+        } catch (Exception e) {
+            log.error("Error deleting AddressBook by ID: {}", e.getMessage());
+            throw new RuntimeException("Failed to delete address book with ID: " + id + " due to: " + e.getMessage());
+        }
     }
 }

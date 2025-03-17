@@ -44,4 +44,15 @@ public class EmailService {
         }
 
     }
+
+    public void sendNotificationEmail(String email, String notificationMessage) {
+        String subject = "Notification from AddressBook";
+
+        SimpleMailMessage emailMessage = new SimpleMailMessage();
+        emailMessage.setTo(email);
+        emailMessage.setSubject(subject);
+        emailMessage.setText(notificationMessage);
+
+        mailSender.send(emailMessage);
+    }
 }
