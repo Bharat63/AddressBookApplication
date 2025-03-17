@@ -9,13 +9,9 @@ import com.example.AddressBook.model.Users;
 import com.example.AddressBook.repository.UserRepository;
 import com.example.AddressBook.serviceInterfaces.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import com.example.AddressBook.Exception.AuthenticationException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,6 +61,28 @@ public class UserServices implements UserInterface {
         userRepository.save(user);
 
         return "Account verified";
+    }
+    public String loginUser(LoginDTO loginDTO) {
+        Users user = userRepository.findByEmail(loginDTO.getEmail())
+                .orElseThrow(() -> new AuthenticationException("Email not found"));
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+            throw new AuthenticationException("Invalid password");
+        }
+
+        if (user.getVerificationToken() != null) {
+            throw new AuthenticationException("Verify your account");
+        }
+
+        String token = jwtUtil.generateToken(user.getEmail());
+
+
+        if (!jwtUtil.validateToken(token)) {
+            System.out.println("Token validation failed!");
+            throw new AuthenticationException("Token validation failed");
+        }
+
+        return "Login Successful. Token: " + token;
     }
 
 }

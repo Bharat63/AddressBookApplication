@@ -22,7 +22,7 @@ public class GlobalExceptionHanlder {
     public ResponseEntity<Map<String, Object>> handleGlobalException(RegistrationException ex) {
 
         Map<String, Object> error = new HashMap<>();
-        error.put("message", "An unexpected error occurred");
+        error.put("message", ex.getMessage());
         error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -36,4 +36,12 @@ public class GlobalExceptionHanlder {
 
         return ResponseEntity.badRequest().body(error);
     }
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthenticationException(AuthenticationException ex) {
+        System.out.println("Caught AuthenticationException: " + ex.getMessage());
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
 }

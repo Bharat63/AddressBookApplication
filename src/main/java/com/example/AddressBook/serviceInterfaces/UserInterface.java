@@ -7,5 +7,7 @@ public interface UserInterface {
     public String registerUser(UserDTO userDTO);
     public String verifyUser(String token);
 
+    public String loginUser(LoginDTO loginDTO);
+
 }
 
