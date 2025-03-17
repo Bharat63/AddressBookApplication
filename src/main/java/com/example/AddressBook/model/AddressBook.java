@@ -2,11 +2,11 @@ package com.example.AddressBook.model;
 
 import jakarta.persistence.*;
 
-@Entity
+import java.io.Serializable;
 
-@Table(name="address-book")
-public class AddressBook {
-    @Id
+@Entity
+public class AddressBook implements Serializable {
+    private static final long serialVersionUID = 1L;    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
