@@ -1,6 +1,7 @@
 package com.example.AddressBook.controller;
 
 import com.example.AddressBook.dto.LoginDTO;
+import com.example.AddressBook.dto.ResetPasswordDTO;
 import com.example.AddressBook.dto.UserDTO;
 import com.example.AddressBook.services.UserServices;
 import jakarta.validation.Valid;
@@ -46,6 +47,16 @@ public class UserController {
         return ResponseEntity.ok("{\"message\": \"Login successful!\", \"token\": \"" + token + "\"}");
     }
 
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<String> forgetPassword(@RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(userServices.forgetPassword(userDTO.getEmail()));
+    }
+
+    @PostMapping("reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam("token") String token, @RequestBody ResetPasswordDTO resetPasswordDTO){
+        return ResponseEntity.ok(userServices.resetPassword(token,resetPasswordDTO.getNewPassword()));
+    }
 
 
 

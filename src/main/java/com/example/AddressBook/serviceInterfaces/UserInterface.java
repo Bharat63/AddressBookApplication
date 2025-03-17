@@ -9,5 +9,9 @@ public interface UserInterface {
 
     public String loginUser(LoginDTO loginDTO);
 
+    public String forgetPassword(String email);
+
+    public String resetPassword(String resetToken, String newPassword);
+
 }
 

@@ -1,5 +1,6 @@
 package com.example.AddressBook.services;
 
+import com.example.AddressBook.Exception.CustomException;
 import com.example.AddressBook.Exception.RegistrationException;
 import com.example.AddressBook.Exception.VerificationException;
 import com.example.AddressBook.Utils.Jwt;
@@ -9,9 +10,13 @@ import com.example.AddressBook.model.Users;
 import com.example.AddressBook.repository.UserRepository;
 import com.example.AddressBook.serviceInterfaces.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.AddressBook.Exception.AuthenticationException;
+import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,5 +89,43 @@ public class UserServices implements UserInterface {
 
         return "Login Successful. Token: " + token;
     }
+
+
+    public String forgetPassword(String email) {
+        if (!StringUtils.hasText(email)) {
+            throw new CustomException("Email is required");
+        }
+
+        Optional<Users> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new CustomException("Email not found");
+        }
+
+        Users foundUser = userOptional.get();
+
+        String resetToken = jwtUtil.generateToken(email);
+        foundUser.setResetToken(resetToken);
+        userRepository.save(foundUser);
+        emailService.sendResetEmail(email, resetToken);
+
+        return "link sent to email.";
+    }
+
+    public String resetPassword(String resetToken, String newPassword) {
+        Optional<Users> userOptional = userRepository.findByResetToken(resetToken);
+
+        if (userOptional.isEmpty()) {
+            throw new CustomException("Invalid or expired token");
+        }
+
+        Users user = userOptional.get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null);
+
+        userRepository.save(user);
+
+        return "Password reset successful";
+    }
+
 
 }
