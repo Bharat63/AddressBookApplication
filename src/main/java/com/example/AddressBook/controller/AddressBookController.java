@@ -4,6 +4,7 @@ import com.example.AddressBook.dto.AddressBookDto;
 import com.example.AddressBook.model.AddressBook;
 import com.example.AddressBook.repository.AddressBookRepository;
 import com.example.AddressBook.services.AddressBookService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class AddressBookController {
     AddressBookService addressBookService;
 
     @PostMapping("/add")
-    public AddressBook addAddressBook(@RequestBody AddressBookDto addressBookDto){
+    public AddressBook addAddressBook(@Valid  @RequestBody AddressBookDto addressBookDto){
         log.info("Request for adding new Address Book");
         return  addressBookService.addAddressBook(addressBookDto);
     }
@@ -38,7 +39,7 @@ public class AddressBookController {
         return addressBookService.getAddressBookById(id);
     }
     @PutMapping("/Update/{id}")
-    public AddressBook updateAddressBook(@PathVariable Long id, @RequestBody AddressBookDto addressBookDto){
+    public AddressBook updateAddressBook(@PathVariable Long id, @Valid @RequestBody AddressBookDto addressBookDto){
         log.info("Request for updating Address Book with id:{}",id);
         return addressBookService.updateAddressBookById(id,addressBookDto);
     }

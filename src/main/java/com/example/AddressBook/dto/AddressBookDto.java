@@ -1,7 +1,19 @@
 package com.example.AddressBook.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+
+
 public class AddressBookDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "Name cannot be empty")
+    @Pattern(regexp = "^[A-Za-z\\s]{3,50}$", message = "Name must contain only letters and be 3-50 characters long")
     private String name;
     private String email;
     private String phone;
