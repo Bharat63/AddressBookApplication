@@ -32,12 +32,14 @@ public class UserServices implements UserInterface {
     @Autowired
     private MessagePublisher messagePublisher;
 
-    public UserServices(UserRepository userRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UserServices(UserRepository userRepository, EmailService emailService, PasswordEncoder passwordEncoder, Jwt jwtUtil, MessagePublisher messagePublisher) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+        this.messagePublisher = messagePublisher;
     }
-
     public String registerUser(UserDTO userDTO) {
         try {
             if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
