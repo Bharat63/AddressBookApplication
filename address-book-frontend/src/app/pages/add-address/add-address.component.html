@@ -1,0 +1,35 @@
+<nav>
+  <ul>
+    <li><a routerLink="/addressbook/get">AddressBook</a></li>
+    <li><a routerLink="/addressbook/add">Add</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h2>Add Address Book Entry</h2>
+
+  <!-- ✅ Ensure (ngSubmit)="onSubmit()" is in the <form> -->
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    
+    <label for="name">Name:</label>
+    <input id="name" type="text" formControlName="name" required />
+    <small *ngIf="addressForm.controls.name.invalid && addressForm.controls.name.touched">
+      Name must be 3-50 letters long.
+    </small>
+
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" required />
+    <small *ngIf="addressForm.controls.email.invalid && addressForm.controls.email.touched">
+      Enter a valid email.
+    </small>
+
+    <label for="phone">Phone:</label>
+    <input id="phone" type="text" formControlName="phone" required />
+    <small *ngIf="addressForm.controls.phone.invalid && addressForm.controls.phone.touched">
+      Enter a valid 10-digit phone number.
+    </small>
+
+    <!-- ✅ Proper Submit Button -->
+    <button type="submit" [disabled]="addressForm.invalid">Submit</button>
+  </form>
+</div>

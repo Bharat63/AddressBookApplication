@@ -1,0 +1,51 @@
+<!-- ✅ Stylish Navbar -->
+<nav class="navbar">
+  <ul>
+    <li><a routerLink="/addressbook/get">📖 Address Book</a></li>
+    <li><a routerLink="/addressbook/add">➕ Add New Address</a></li>
+  </ul>
+</nav>
+
+<!-- ✅ Container with Styling -->
+<div class="container">
+  <h2>📖 Address Book</h2>
+
+  <!-- ✅ Address Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of addresses">
+        <td>{{ entry.id }}</td>
+
+        <!-- ✅ Name as a Clickable Link -->
+        <td>
+          <a [routerLink]="['/addressbook/get', entry.id]" class="name-link">
+            {{ entry.name }}
+          </a>
+        </td>
+
+        <td>{{ entry.email }}</td>
+        <td>{{ entry.phone }}</td>
+
+        <td class="actions">
+          <!-- ✅ Styled Edit Button -->
+          <a [routerLink]="['/addressbook/Update', entry.id]" class="edit-btn">✏️ Edit</a>
+
+          <!-- ✅ Styled Delete Button -->
+          <button (click)="deleteAddress(entry.id)" class="delete-btn">🗑️ Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ✅ Show when no addresses are available -->
+  <p *ngIf="addresses.length === 0" class="no-data">⚠️ No addresses available.</p>
+</div>

@@ -1,6 +1,7 @@
 package com.example.AddressBook.services;
 
 import com.example.AddressBook.Utils.Jwt;
+import com.example.AddressBook.dto.ApiResponse;
 import com.example.AddressBook.dto.LoginDTO;
 import com.example.AddressBook.dto.UserDTO;
 import com.example.AddressBook.model.Users;
@@ -13,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.util.StringUtils;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -40,7 +43,7 @@ public class UserServices implements UserInterface {
         this.jwtUtil = jwtUtil;
         this.messagePublisher = messagePublisher;
     }
-    public String registerUser(UserDTO userDTO) {
+    public ApiResponse registerUser(UserDTO userDTO) {
         try {
             if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
                 throw new RuntimeException("Email already exists: " + userDTO.getEmail());
@@ -57,12 +60,11 @@ public class UserServices implements UserInterface {
             userRepository.save(user);
 
             emailService.sendVerificationEmail(user.getEmail(), verificationToken);
-
             messagePublisher.sendMessage("user.registration.queue", "New User Registered: " + user.getEmail());
 
-            return "Verification email sent";
+            return new ApiResponse("Verification email sent", true);
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred while registering the user: " + e.getMessage());
+            return new ApiResponse("An error occurred while registering the user: " + e.getMessage(), false);
         }
     }
 
@@ -100,7 +102,7 @@ public class UserServices implements UserInterface {
                 throw new RuntimeException("Token validation failed");
             }
 
-            return "Login Successful. Token: " + token;
+            return  token;
         } catch (Exception e) {
             throw new RuntimeException("An error occurred during login: " + e.getMessage());
         }
@@ -149,4 +151,22 @@ public class UserServices implements UserInterface {
             throw new RuntimeException("An error occurred during password reset: " + e.getMessage());
         }
     }
+
+    public void logoutUser(String email, String token) {
+        Optional<Users> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            Users user = userOpt.get();
+
+
+            user.setBlacklistedToken(token);
+
+            userRepository.save(user);
+        }
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return userRepository.findByBlacklistedToken(token).isPresent();
+    }
+
+
 }

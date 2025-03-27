@@ -30,6 +30,9 @@ public class Users {
     @Column(nullable = false)
     private boolean verified = false;
 
+    @Column(unique = true)
+    private String blacklistedToken; // New field to store the latest blacklisted token
+
     public Users() {}
 
     public Long getId() {
@@ -94,6 +97,14 @@ public class Users {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public String getBlacklistedToken() {
+        return blacklistedToken;
+    }
+
+    public void setBlacklistedToken(String blacklistedToken) {
+        this.blacklistedToken = blacklistedToken;
     }
 
     public Users(String firstName, String lastName, String email, String password) {

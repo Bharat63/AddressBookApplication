@@ -1,0 +1,98 @@
+/* 🔹 Container Styling */
+.login-container {
+  max-width: 380px;
+  margin: 60px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border-radius: 10px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+}
+
+/* 🔹 Heading */
+.login-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* 🔹 Form Styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔹 Labels */
+label {
+  font-weight: bold;
+  text-align: left;
+  display: block;
+  margin-top: 10px;
+}
+
+/* 🔹 Input Fields */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+/* 🔹 Placeholder Styling */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 🔹 Input Focus Effect */
+input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.4);
+}
+
+/* 🔹 Login Button */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff5733;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* 🔹 Button Hover Effect */
+button:hover {
+  background-color: #e63c1f;
+  transform: scale(1.05);
+}
+
+/* 🔹 Disabled Button */
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* 🔹 Forgot Password Link */
+.forgot-password {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.forgot-password a {
+  color: #ffcccb;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}

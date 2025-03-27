@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Edit Address</h2>
+  
+    <form [formGroup]="editAddressForm" (ngSubmit)="updateAddress()">
+      <div>
+        <label>Name:</label>
+        <input type="text" formControlName="name" required />
+        <div *ngIf="editAddressForm.controls.name.invalid && editAddressForm.controls.name.touched">
+          <small class="error">Name is required.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label>Email:</label>
+        <input type="email" formControlName="email" required />
+        <div *ngIf="editAddressForm.controls.email.invalid && editAddressForm.controls.email.touched">
+          <small class="error">Enter a valid email.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label>Phone:</label>
+        <input type="text" formControlName="phone" required />
+        <div *ngIf="editAddressForm.controls.phone.invalid && editAddressForm.controls.phone.touched">
+          <small class="error">Enter a 10-digit phone number.</small>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="isSubmitting || editAddressForm.invalid">
+        {{ isSubmitting ? 'Updating...' : 'Update Address' }}
+      </button>
+    </form>
+  </div>
+  

@@ -48,19 +48,19 @@ public class UserServicesTest {
     @BeforeEach
     void setUp() {
         mockUserDTO = new UserDTO();
-        mockUserDTO.setFirstName("Bharat");
-        mockUserDTO.setLastName("Kumar");
-        mockUserDTO.setEmail("bksharma1881@gmail.com");
+        mockUserDTO.setFirstName("Bhupesh");
+        mockUserDTO.setLastName("Nauhwar");
+        mockUserDTO.setEmail("bhupeshkumar052000@gmail.com");
         mockUserDTO.setPassword("password123");
 
         mockUser = new Users();
-        mockUser.setFirstName("Bharat");
-        mockUser.setLastName("Kumar");
-        mockUser.setEmail("bksharma1881@gmail.com");
+        mockUser.setFirstName("Bhupesh");
+        mockUser.setLastName("Nauhwar");
+        mockUser.setEmail("bhupeshkumar052000@gmail.com");
         mockUser.setPassword("hashedPassword");
         mockUser.setVerificationToken(UUID.randomUUID().toString());
 
-        mockLoginDTO = new LoginDTO("bksharma1881@gmail.com", "password123");
+        mockLoginDTO = new LoginDTO("bhupeshkumar052000@gmail.com", "password123");
     }
 
     @Test

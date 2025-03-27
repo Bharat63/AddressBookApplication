@@ -1,0 +1,14 @@
+<div class="address-card">
+  <h2>📍 Address Details</h2>
+
+  <div *ngIf="addressDetails" class="details">
+      <p><span>ID:</span> {{ addressDetails.id }}</p>
+      <p><span>Name:</span> {{ addressDetails.name }}</p>
+      <p><span>Email:</span> {{ addressDetails.email }}</p>
+      <p><span>Phone:</span> {{ addressDetails.phone }}</p>
+  </div>
+
+  <a routerLink="/addressbook/get">
+      <button class="back-btn">⬅️ Back to Address Book</button>
+  </a>
+</div>

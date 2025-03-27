@@ -1,0 +1,101 @@
+/* ✅ Modern Navbar Styling */
+nav {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  padding: 14px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 8px 12px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 6px;
+}
+
+nav ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffdd57;
+  text-shadow: 0 0 8px rgba(255, 221, 87, 0.8);
+}
+
+/* ✅ Modern Form Container */
+.container {
+  margin: 40px auto;
+  width: 50%;
+  text-align: center;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input {
+  padding: 12px;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+input::placeholder {
+  color: #777;
+}
+
+input:focus {
+  border-color: #ff416c;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 65, 108, 0.5);
+}
+
+/* ✅ Form Error Message */
+small {
+  color: #ff4444;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ✅ Stylish Button */
+button {
+  padding: 12px;
+  background: linear-gradient(45deg, #28a745, #218838);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+button:hover {
+  background: linear-gradient(45deg, #218838, #1e7e34);
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(40, 167, 69, 0.6);
+}

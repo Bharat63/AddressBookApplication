@@ -1,0 +1,106 @@
+/* ✅ Modern Navbar Styling */
+nav {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  padding: 14px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  padding: 8px 12px;
+}
+
+nav ul li a:hover {
+  color: #ffcc00;
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+}
+
+/* ✅ Glassmorphic Form Styling */
+.container {
+  margin: 40px auto;
+  width: 50%;
+  text-align: center;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ✅ Fixed Input Styling */
+input {
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9); /* Changed background to solid white */
+  color: #333; /* Dark text for visibility */
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+input::placeholder {
+  color: #777; /* Darker placeholder for contrast */
+}
+
+input:focus {
+  outline: none;
+  background: #fff; /* Full white when typing */
+  border: 2px solid #6a11cb; /* Highlighted border */
+  box-shadow: 0 0 8px rgba(106, 17, 203, 0.5);
+}
+
+/* ✅ Form Error Message */
+small {
+  color: #ff4444;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ✅ Neon Button */
+button {
+  padding: 12px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(255, 71, 71, 0.4);
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ff4b2b, #ff416c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 71, 71, 0.6);
+}

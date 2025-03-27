@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -90,16 +91,14 @@ public class AddressBookService {
 
     @CacheEvict(value = "addressBook", key = "#id")
     public void deleteAddressBookById(Long id) {
-        try {
-            log.info("Deleting AddressBook with ID: {}", id);
-            AddressBook found = addressBookRepository.findById(id).orElseThrow(() ->
-                    new RuntimeException("Address book with ID " + id + " not found"));
+        Optional<AddressBook> addressBook = addressBookRepository.findById(id);
 
-            addressBookRepository.delete(found);
-            log.info("Deleted AddressBook with ID: {}", id);
-        } catch (Exception e) {
-            log.error("Error deleting AddressBook by ID: {}", e.getMessage());
-            throw new RuntimeException("Failed to delete address book with ID: " + id + " due to: " + e.getMessage());
+        if (addressBook.isPresent()) {
+            addressBookRepository.deleteById(id);
+            System.out.println("✅ Address Book deleted successfully!");
+        } else {
+            throw new RuntimeException("Address book with ID " + id + " not found");
         }
     }
+
 }

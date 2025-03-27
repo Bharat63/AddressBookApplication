@@ -1,0 +1,74 @@
+/* ✅ Address Card Styling */
+.address-card {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.address-card:hover {
+    transform: scale(1.03);
+}
+
+/* ✅ Header Styling */
+.address-card h2 {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 22px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Details Section */
+.details {
+    text-align: left;
+    margin: 20px auto;
+    font-size: 18px;
+    color: #444;
+}
+
+.details p {
+    margin: 10px 0;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    transition: all 0.3s ease-in-out;
+}
+
+.details p:hover {
+    background: rgba(255, 65, 108, 0.1);
+    border-radius: 8px;
+    padding-left: 15px;
+}
+
+/* ✅ Highlight Labels */
+.details p span {
+    font-weight: bold;
+    color: #ff416c;
+}
+
+/* ✅ Modern Back Button */
+.back-btn {
+    padding: 12px 18px;
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.back-btn:hover {
+    background: linear-gradient(45deg, #218838, #1e7e34);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(40, 167, 69, 0.6);
+}

@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     Optional<Users> findByVerificationToken(String token);
 
     Optional<Users>findByResetToken(String resetToken);
+
+    Optional<Users> findByBlacklistedToken(String token);
 }

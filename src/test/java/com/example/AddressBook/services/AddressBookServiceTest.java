@@ -41,8 +41,8 @@ public class AddressBookServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        addressBook = new AddressBook(1L, "Bharat Kumar", "bksharma1881@gmail.com", "1234567890");
-        addressBookDto = new AddressBookDto(2L, "Bharat kumar", "bksharma1881@gmail.com", "1234567890");
+        addressBook = new AddressBook(1L, "Bhupesh Nauhwar", "bhupesh052000@gmail.com", "1234567890");
+        addressBookDto = new AddressBookDto(2L, "Bhupesh Nauhwar", "bhupesh052000@gmail.com", "1234567890");
     }
 
     @Test
